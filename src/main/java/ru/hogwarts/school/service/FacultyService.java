@@ -7,7 +7,6 @@ import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Service
 public class FacultyService {
@@ -49,9 +48,12 @@ public class FacultyService {
         return facultyRepository.findAllByColorContainingIgnoreCaseOrNameContainingIgnoreCase(param, param);
     }
 
+    //    public Collection<Student> getStudents(Long facultyId) {
+//        return studentRepository.findAll().stream()
+//                .filter(s -> s.getFaculty().getId() == facultyId)
+//                .collect(Collectors.toList());
+//    }
     public Collection<Student> getStudents(Long facultyId) {
-        return studentRepository.findAll().stream()
-                .filter(s -> s.getFaculty().getId() == facultyId)
-                .collect(Collectors.toList());
+        return facultyRepository.findById(facultyId).orElseThrow().getStudents();
     }
 }
